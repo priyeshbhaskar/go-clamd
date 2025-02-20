@@ -41,7 +41,7 @@ const (
 )
 
 type Clamd struct {
-	address string
+	address   string
 	chunkSize int
 }
 
@@ -278,7 +278,7 @@ func (c *Clamd) ScanStream(r io.Reader, abort chan bool) (chan *ScanResult, erro
 	conn.sendCommand("INSTREAM")
 
 	for {
-		buf := make([]byte, CHUNK_SIZE)
+		buf := make([]byte, c.chunkSize)
 
 		nr, err := r.Read(buf)
 		if nr > 0 {
@@ -306,7 +306,7 @@ func (c *Clamd) ScanStream(r io.Reader, abort chan bool) (chan *ScanResult, erro
 	return ch, nil
 }
 
-func NewClamd(address string ) *Clamd {
-	clamd := &Clamd{address: address , chunkSize: CHUNK_SIZE}
+func NewClamd(address string) *Clamd {
+	clamd := &Clamd{address: address, chunkSize: CHUNK_SIZE}
 	return clamd
 }
